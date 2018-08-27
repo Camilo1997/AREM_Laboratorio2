@@ -5,6 +5,8 @@
  */
 package edu.escuelaing.arem.designprimer;
 
+import java.util.HashMap;
+import spark.ModelAndView;
 import static spark.Spark.*;
 
 /**
@@ -13,9 +15,14 @@ import static spark.Spark.*;
  */
 public class SparkWebApp {
 
+    private static codeWebGenerator codeGenerator;
+
     public static void main(String[] args) {
         port(getPort());
-        get("/", (req, res) -> "Hello Heroku");
+        codeGenerator = new codeWebGenerator();
+        get("/", (req, res) -> codeGenerator.getAllCode(req, res));
+        get("/results", (req, res) -> codeGenerator.codeDeviationGenerator());
+
     }
 
     static int getPort() {
